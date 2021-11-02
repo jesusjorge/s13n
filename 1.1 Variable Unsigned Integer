@@ -1,0 +1,20 @@
+Edited: 2021/11/01 23:05
+
+Variable Unsigned Integer
+
+Can define values from 0 up to (2^128)-1
+It can also define null value
+Must be written in Big-Endian format
+
+1.- First byte
+      Can define values from 0 up to 250
+      Special Values;
+        255:= null
+        254:= value defined in the next 2 bytes   ( UINT16)
+        253:= value defined in the next 4 bytes   ( UINT32)
+        252:= value defined in the next 8 bytes   ( UINT64)
+        251:= value defined in the next 16 bytes  (UINT128)
+        
+Recomendations;
+  When retreiving/storing the value, the parameter type could be
+    the maximum integer size parameter (i.e; Uint64)
