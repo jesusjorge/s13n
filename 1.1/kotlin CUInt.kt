@@ -1,7 +1,11 @@
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
 import java.io.InputStream
 import java.lang.Exception
+import java.lang.StringBuilder
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
+import android.util.Base64
 
 //https://github.com/jesusjorge/s13n/wiki/1.1
 //
@@ -110,6 +114,28 @@ class CUInt {
             else if(Value == 251.toByte())
                 return 16
             throw Exception("Unknown CUInt token")
+        }
+        fun SelfTest() : Boolean{
+            var Log = StringBuilder()
+            Log.append("CUInt did not pass the self check.\n\tTest Results:\n")
+            var TestCases = "EP8AAQL5+v4A+/4A/P7//v7///0AAQAA/QABAAH9/////v3//////AAAAAEAAAAA/AAAAAEAAAAB"
+            var TS = ByteArrayOutputStream()
+            var RS = ByteArrayInputStream(Base64.decode(TestCases, Base64.DEFAULT))
+            var Tests = Read(RS)!!
+            TS.write(Write(Tests))
+            while(Tests > 0UL){
+                var Value = Read(RS)
+                Log.append(Value.toString()).append("\n")
+                TS.write(Write(Value))
+                Tests = Tests - 1UL
+            }
+            var Results = String(Base64.encode(TS.toByteArray(),Base64.DEFAULT)).replace("\n","")
+            if(Results != TestCases){
+                Log.append("Source Test String: ").append(TestCases)
+                Log.append("\nResult Test String: ").append(Results)
+                throw Exception(Log.toString())
+            }
+            return Results == TestCases
         }
         //endregion
     }
