@@ -8,10 +8,25 @@ import java.nio.ByteOrder
 //var ByteArrayResult = CUInt.Write(TrivialULong? )
 //var ULongResult = CUInt.Read(ByteArrayInputStream)
 
+
+enum class CUInts{ CUInt8, CUInt16, CUInt32, CUInt64, CUInt128 }
+
 class CUInt {
-    enum class CUInts{ CUInt8, CUInt16, CUInt32, CUInt64, CUInt128 }
     companion object{
         val DefaultType = CUInts.CUInt128
+        fun Read(Input: InputStream, Type: CUInts = DefaultType) : ULong?{
+            var Buffer = ByteArray(8)
+            var Read = Input.read(Buffer,0,1)
+            if(Read == 0)
+                return null
+            var Result = Read(Buffer[0],Type)
+            if(Result.PendingRead == 0)
+                return Result.Value
+            Read = Input.read(Buffer,0,Result.PendingRead)
+            if(Read < Result.PendingRead)
+                return null
+            return ReadBytes(Buffer,Result.PendingRead)
+        }
         fun Write(Value: ULong?, Type: CUInts = DefaultType) : ByteArray{
             if(Value == null)
                 return byteArrayOf(255.toByte())
@@ -63,19 +78,7 @@ class CUInt {
             else
                 return CUIntReadResult(null, Pending)
         }
-        fun Read(Input: InputStream, Type: CUInts = DefaultType) : ULong?{
-            var Buffer = ByteArray(8)
-            var Read = Input.read(Buffer,0,1)
-            if(Read == 0)
-                return null
-            var Result = Read(Buffer[0],Type)
-            if(Result.PendingRead == 0)
-                return Result.Value
-            Read = Input.read(Buffer,0,Result.PendingRead)
-            if(Read < Result.PendingRead)
-                return null
-            return ReadBytes(Buffer,Result.PendingRead)
-        }
+        //region [Internals]
         fun PendingRead(HeaderByte: Byte, Type : CUInts) : Int?{
             val Value = HeaderByte.toUByte().toULong()
             if(Value <= MaxHeaderValue(Type))
@@ -108,6 +111,7 @@ class CUInt {
                 return 16
             throw Exception("Unknown CUInt token")
         }
+        //endregion
     }
 }
 
