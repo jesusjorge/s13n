@@ -1,1 +1,1 @@
-[Compressed Unsigned Integer Format](https://github.com/jesusjorge/s13n/wiki/1.1)
+[Definition](https://github.com/jesusjorge/s13n/wiki/1.1)
