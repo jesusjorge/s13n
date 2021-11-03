@@ -118,7 +118,7 @@ class CUInt {
         fun SelfTest() : Boolean{
             var Log = StringBuilder()
             Log.append("CUInt did not pass the self check.\n\tTest Results:\n")
-            var TestCases = "EP8AAQL5+v4A+/4A/P7//v7///0AAQAA/QABAAH9/////v3//////AAAAAEAAAAA/AAAAAEAAAAB"
+            var TestCases = "Ff8AAQID+fr+APv+AP3+AP7+AP/+AQD+AQH9AP///v0A/////QEAAAD9AQAAAf3////+/f/////8AAAAAQAAAAD8AAAAAQAAAAE="
             var TS = ByteArrayOutputStream()
             var RS = ByteArrayInputStream(Base64.decode(TestCases, Base64.DEFAULT))
             var Tests = Read(RS)!!
