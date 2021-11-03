@@ -4,6 +4,9 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
 //https://github.com/jesusjorge/s13n/wiki/1.1
+//
+//var ByteArrayResult = CUInt.Write(TrivialULong? )
+//var ULongResult = CUInt.Read(ByteArrayInputStream)
 
 class CUInt {
     enum class CUInts{ CUInt8, CUInt16, CUInt32, CUInt64, CUInt128 }
