@@ -1,1 +1,0 @@
-Feel free to request a CUInt implementation on your desired language.
