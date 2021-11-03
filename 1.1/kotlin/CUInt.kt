@@ -3,6 +3,8 @@ import java.lang.Exception
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 
+//https://github.com/jesusjorge/s13n/wiki/1.1
+
 class CUInt {
     enum class CUInts{ CUInt8, CUInt16, CUInt32, CUInt64, CUInt128 }
     companion object{
