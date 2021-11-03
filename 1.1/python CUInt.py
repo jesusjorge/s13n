@@ -89,7 +89,7 @@ class CUInt:
     def SelfTest():
         Log = []
         Log.append("CUInt did not pass the self check.\n\tTest Results:\n")
-        TestCases = "EP8AAQL5+v4A+/4A/P7//v7///0AAQAA/QABAAH9/////v3//////AAAAAEAAAAA/AAAAAEAAAAB"
+        TestCases = "Ff8AAQID+fr+APv+AP3+AP7+AP/+AQD+AQH9AP///v0A/////QEAAAD9AQAAAf3////+/f/////8AAAAAQAAAAD8AAAAAQAAAAE="
         TS = io.BytesIO()
         RS = io.BytesIO(base64.b64decode(TestCases))
         Tests = CUInt.Read(RS)
