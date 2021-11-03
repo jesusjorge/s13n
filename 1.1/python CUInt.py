@@ -1,6 +1,8 @@
-enum import Enum
+import dataclasses as DCLS
+from enum import Enum
 import io
 import struct
+import base64
 
 #https://github.com/jesusjorge/s13n/wiki/1.1
 #
@@ -84,3 +86,29 @@ class CUInt:
         elif B == 0xfb:
             return 16
         raise Exception("Unknown CUInt type")
+    def SelfTest():
+        Log = []
+        Log.append("CUInt did not pass the self check.\n\tTest Results:\n")
+        TestCases = "EP8AAQL5+v4A+/4A/P7//v7///0AAQAA/QABAAH9/////v3//////AAAAAEAAAAA/AAAAAEAAAAB"
+        TS = io.BytesIO()
+        RS = io.BytesIO(base64.b64decode(TestCases))
+        Tests = CUInt.Read(RS)
+        TS.write(CUInt.Write(Tests))
+        while Tests > 0:
+            Value = CUInt.Read(RS)
+            Log.append(str(Value))
+            Log.append("\n")
+            TS.write(CUInt.Write(Value))
+            Tests = Tests - 1
+        TS.seek(0)
+        Result = base64.b64encode(TS.read()).decode('utf-8')
+        if Result != TestCases:
+            Log.append("Source Test String: ")
+            Log.append(TestCases)
+            Log.append("\nResult Test String: ")
+            Log.append(Result)
+            Log = ''.join(Log)
+            raise Exception(Log)    
+        return Result == TestCases
+
+CUInt.SelfTest()
